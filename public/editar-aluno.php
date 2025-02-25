@@ -346,49 +346,50 @@ try {
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        let webcamStream;
+let webcamStream;
 
-        // Inicializa a webcam automaticamente
-        async function startWebcam() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                document.getElementById('webcam').srcObject = stream;
-                webcamStream = stream;
-            } catch (error) {
-                console.error("Erro ao acessar a webcam:", error);
-                alert("Não foi possível acessar a câmera. Verifique as permissões.");
-            }
-        }
+// Inicializa a webcam automaticamente
+async function startWebcam() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        document.getElementById('webcam').srcObject = stream;
+        webcamStream = stream;
+    } catch (error) {
+        console.error("Erro ao acessar a webcam:", error);
+        alert("Não foi possível acessar a câmera. Verifique as permissões.");
+    }
+}
 
-        // Captura a foto da webcam
-        function capturePhoto() {
-            const video = document.getElementById('webcam');
-            const canvas = document.getElementById('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+// Captura a foto da webcam
+function capturePhoto() {
+    const video = document.getElementById('webcam');
+    const canvas = document.getElementById('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            // Converte a imagem capturada para base64 e armazena no campo oculto
-            const photoData = canvas.toDataURL('image/png');
-            document.getElementById('captured-photo').value = photoData;
+    // Converte a imagem capturada para base64 e armazena no campo oculto
+    const photoData = canvas.toDataURL('image/png');
+    document.getElementById('captured-photo').value = photoData;
 
-            // Exibe a imagem capturada no contêiner ao lado
-            const previewImage = document.getElementById('captured-photo-preview');
-            previewImage.src = photoData;
-            previewImage.style.display = 'block';
-        }
+    // Exibe a imagem capturada no contêiner ao lado
+    const previewImage = document.getElementById('captured-photo-preview');
+    previewImage.src = photoData;
+    previewImage.style.display = 'block';
+}
 
-        // Aplica máscaras aos campos usando Inputmask
-        $(document).ready(function () {
-            $('#rg').inputmask('999999-9'); // Máscara para RG
-            $('#cpf').inputmask('999.999.999-99'); // Máscara para CPF
-            $('#telefone').inputmask('(99) 99999-9999'); // Máscara para telefone
-            $('#data_nascimento').inputmask('99/99/9999'); // Máscara para data de nascimento
+// Aplica máscaras aos campos usando Inputmask
+$(document).ready(function () {
+    $('#rg').inputmask('999999-9'); // Máscara para RG
+    $('#cpf').inputmask('999.999.999-99'); // Máscara para CPF
+    $('#telefone').inputmask('(99) 99999-9999'); // Máscara para telefone
+    $('#data_nascimento').inputmask('99/99/9999'); // Máscara para data de nascimento
+    $('#matricula').inputmask('9999999999'); // Máscara para matrícula (exemplo: 10 dígitos)
+});
 
-            // Inicia a webcam quando a página carregar
-            window.onload = startWebcam;
-        });
+// Inicia a webcam quando a página carregar
+window.onload = startWebcam;
     </script>
 </body>
 </html>
